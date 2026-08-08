@@ -37,7 +37,7 @@ I used the following parameters:
 
 ## Usage
 
-To illustrate how operations can be handled in the logistics branch of a company
+To illustrate the inner workings of operations and how it can be handled in the logistics branch of a company
  
  ## Contributing
  
