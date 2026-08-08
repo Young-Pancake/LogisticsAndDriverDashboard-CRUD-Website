@@ -23,11 +23,12 @@ npm install express mysql body-parser ejs
 ```
 ### MySQL setup
 I used the following parameters:
-1. host: 127.0.0.1
-2. user: root
-3. database name: logisticsAndDriverDashboard
-4. port: 33061   
-it's up to you to change it as you see fit
+>1. host: 127.0.0.1
+>2. user: root
+>3. database name: logisticsAndDriverDashboard
+>4. port: 33061   
+
+*it's up to you to change it as you see fit*
 
 ## Schema
 ![logistics and driver schema]()
