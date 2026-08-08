@@ -30,8 +30,10 @@ I used the following parameters:
 
 *it's up to you to change it as you see fit*
 
+## ER Daigram
+![logistics and driver relation diagram](logisticsAndDriverRelationDiagram.png)
 ## Schema
-![logistics and driver schema]()
+![logistics and driver schema](https://github.com/Young-Pancake/LogisticsAndDriverDashboard-CRUD-Website/blob/main/logisticsAndDriverSchemaTables.png)
 
 ## Usage
 
