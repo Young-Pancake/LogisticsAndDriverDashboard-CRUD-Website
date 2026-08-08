@@ -1,0 +1,448 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Logistics</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: %100;
+      overflow-y: scroll;
+    }
+    .logistics-container {
+      width: 300px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    .logistics-container h1 {
+      color: #333;
+      text-align: center;
+    }
+    .logistics-container input[type="text"],
+    .logistics-container button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 3px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+    .logistics-container input[type="text"]:focus {
+      outline: none;
+      border-color: #007bff;
+      box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.5);
+    }
+    .logistics-container button {
+      background-color: #007bff;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .logistics-container button:hover {
+      background-color: #0056b3;
+    }
+    .logistics-container p {
+      margin-top: 10px;
+      font-size: 14px;
+      text-align: center;
+    }
+    .logistics-container a {
+      color: #007bff;
+      text-decoration: none;
+    }
+    .logistics-container a:hover {
+      text-decoration: underline;
+    }
+    .logistics-container select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 3px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      background-color: #E0E0E0;
+    }
+    
+  </style>
+</head>
+<body>
+	<div class="logistics-container">
+  		<h1>logistics</h1>
+    	<form action="/" method="POST">
+        	<h3>select operation (create, update, delete)</h3>
+      		<select name='crud-selection' id='crud-selection'>
+                <option default>Select</option>
+                <option id='create' name='create'>Create</option>
+                <option id='update' name='update'>Update</option>
+                <option id='delete' name='delete'>Delete</option>
+      		</select>
+        	<div id='creating' hidden>
+            	<input type="text" name="duration" placeholder="Enter Duration" 
+                pattern='\d+:\d{2}:\d{2}' required disabled><br>
+                <input type="text" name="start_location" placeholder="Enter start location" required disabled><br>
+                <input type="text" name="end_location" placeholder="Enter end location" required disabled><br>
+                <br>
+                <input type="text" name="d_id" placeholder="Driver ID" required disabled><br>
+                <input type="text" name="d_name" placeholder="Driver Name" required disabled><br>
+                <input type="text" name="d_age" placeholder="Driver Age" required disabled><br>
+                <h3>what info do you want to enter?</h3>
+                <select name='create-selection' id='create-selection'>
+                    <option default>Select</option>
+                    <option id='person'>insert person</option>
+                    <option id='material'>insert material</option>
+                    <option id='both'>insert persons & materials</option>
+                </select>
+                <div id='persons-div' hidden>
+                    <input type="text" name="p_id" id="p_id" placeholder="Persons ID" required disabled>
+                    <input type="text" name="p_age" placeholder="Age"><br>
+                    <input type="text" name="p_name" placeholder="Name"><br>
+                    <input type="text" name="p_destination" placeholder="Destination"><br>
+                    <input type="text" name="p_origin" placeholder="Origin"><br><br>
+                </div>
+                <div id='materials-div' hidden>
+                    <input type="text" name="m_id" id="m_id" placeholder="Material ID" required disabled>
+                    <input type="text" name="m_name" placeholder="Material Name"><br>
+                    <input type="text" name="weight" placeholder="Weight"><br>
+                    <input type="text" name="origin" placeholder="Origin"><br>
+                    <input type="text" name="quantity" placeholder="Quantity"><br>
+                </div>
+                <button type="submit">Create</button>
+        	</div>
+            
+            <div id='updating' hidden> 
+  				<h3>what to update?</h3>
+  				<select name='update-selection' id='update-selection'>
+                	<option default>Select</option>
+                    <option id='logistics-update' name='logistics-update'>update logistics</option>
+                    <option id='driver-update' name='driver-update'>update driver</option>
+                    <option id='persons-update' name='persons-update'>update persons</option>
+                    <option id='materials-update' name='materials-update'>update materials</option>
+    			</select>
+    			<div id='logistics-update-div' hidden>
+    				<h3>select logistics ID to add/update (leave empty to keep the same)</h3>
+                    <input type="text" name="l_id" id="l_id" placeholder="Logistics ID" required disabled><br>
+                    <input type="text" name="duration" placeholder="Duration"><br>
+                    <input type="text" name="start-location" placeholder="Start Location"><br>
+                    <input type="text" name="end-location" placeholder="End Location"><br>
+                </div>
+    			<div id='driver-update-div' hidden>
+    				<h3>select driver ID to add/update (leave empty to keep the same)</h3>
+                    <input type="text" name="d_id" id="d_id" placeholder="Driver ID" required disabled><br>
+                    <input type="text" name="d_age" placeholder="Driver Age"><br>
+                    <input type="text" name="d_name" placeholder="Driver Name"><br>
+    			</div>
+    			<div id='persons-update-div' hidden>
+    				<h3>select persons ID to add/update (leave empty to keep the same)</h3>
+                    <input type="text" name="p_id" id="p_id" placeholder="Persons ID" required disabled><br>
+                    <input type="text" name="p_age" placeholder="Person Age"><br>
+                    <input type="text" name="p_name" placeholder="Person Name"><br>
+                    <input type="text" name="p_destination" placeholder="Person Destination"><br>
+                    <input type="text" name="p_origin" placeholder="Person Origin"><br>
+   			 	</div>
+                <div id='materials-update-div' hidden>
+                	<h3>select materials ID to add/update (leave empty to keep the same)</h3>
+                    <input type="text" name="m_id" id="m_id" placeholder="Material ID" required disabled><br>
+                    <input type="text" name="m_name" placeholder="Material Name"><br>
+                    <input type="text" name="weight" placeholder="Material Weight"><br>
+                    <input type="text" name="origin" placeholder="Material Origin"><br>
+                    <input type="text" name="quantity" placeholder="Material Quantity"><br>
+                </div>
+            	<div id='update-btn' hidden>
+                	<button type="submit">Update</button>
+    			</div>
+  			</div>
+            
+            <div id='deleting' hidden>
+  				<h3>what to delete?</h3>
+  				<select name='delete-selection' id='delete-selection'>
+                    <option default>Select</option>
+                    <option id='logistics-delete' name='logistics-delete'>delete logistics</option>
+                    <option id='driver-delete' name='driver-delete'>delete driver</option>
+                    <option id='persons-delete' name='person-delete'>delete persons</option>
+                    <option id='materials-delete' name='material-delete'>delete materials</option>
+    			</select>
+    			<div id='logistics-delete-div' hidden>
+                	<h3>[WARNING] Be careful of what you delete</h3>
+    				<input type="text" name="l_id" id="l_id" placeholder="Logistics ID" required disabled><br>
+    			</div>
+    			<div id='driver-delete-div' hidden>
+                	<h3>[WARNING] Be careful of what you delete</h3>
+    				<input type="text" name="d_id" id="d_id" placeholder="Driver ID" required disabled><br>
+    			</div>
+    			<div id='persons-delete-div' hidden>
+                	<h3>[WARNING] Be careful of what you delete</h3>
+    				<input type="text" name="p_id" id="p_id" placeholder="Persons ID" required disabled><br>
+    			</div>
+    			<div id='materials-delete-div' hidden>
+                	<h3>[WARNING] Be careful of what you delete</h3>
+    				<input type="text" name="m_id" id="m_id" placeholder="Material ID" required disabled><br>
+    			</div>
+    			<div id='delete-btn' hidden>
+    			<button type="submit">Delete</button>
+    			</div>
+  			</div>
+            <p>are you a driver? <a href="/">Click here</a></p>
+  		</form>
+	</div>
+<script>
+	const crud = document.getElementById('crud-selection');
+    const creating = document.getElementById('creating');
+  	const updating = document.getElementById('updating');
+	const deleting = document.getElementById('deleting');
+    
+    const creatingChildren = creating.children;
+    const updatingChildren = updating.children;
+    const deletingChildren = deleting.children;
+    
+    const createSelection = document.getElementById('create-selection');
+    const updateSelection = document.getElementById('update-selection');
+    const deleteSelection = document.getElementById('delete-selection');
+
+	crud.addEventListener('change', function() {
+    	switch (this.options[this.selectedIndex].text) {
+        case 'Create':
+        	console.log('hello');
+        	creating.style.display = 'block';
+            updating.style.display = 'none';
+            deleting.style.display = 'none';
+            for (const child of creatingChildren) {
+            	child.disabled = false;
+            }
+            for (const child of updatingChildren) {
+            	child.disabled = true;
+            }
+            for (const child of deletingChildren) {
+            	child.disabled = true;
+            }
+        	break;
+            
+        case 'Update':
+        	creating.style.display = 'none';
+            updating.style.display = 'block';
+            deleting.style.display = 'none';
+            for (const child of creatingChildren) {
+            	child.disabled = true;
+            }
+            for (const child of updatingChildren) {
+            	child.disabled = false;
+            }
+            for (const child of deletingChildren) {
+            	child.disabled = true;
+            }
+            break;
+            
+        case 'Delete':
+        	creating.style.display = 'none';
+            updating.style.display = 'none';
+            deleting.style.display = 'block';
+            for (const child of creatingChildren) {
+            	child.disabled = true;
+            }
+            for (const child of updatingChildren) {
+            	child.disabled = true;
+            }
+            for (const child of deletingChildren) {
+            	child.disabled = false;
+            }
+        	break;
+            
+        default:
+        	creating.style.display = 'none';
+            updating.style.display = 'none';
+            deleting.style.display = 'none';
+            for (const child of creatingChildren) {
+            	child.disabled = true;
+            }
+            for (const child of updatingChildren) {
+            	child.disabled = true;
+            }
+            for (const child of deletingChildren) {
+            	child.disabled = true;
+            }
+        	break;
+        }
+    });
+    
+    createSelection.addEventListener('change', function() {
+        switch (this.options[this.selectedIndex].text) {
+        case 'insert person':
+            creating.children['persons-div'].style.display= 'block';
+            creating.children['materials-div'].style.display = 'none';
+            creating.children['persons-div'].children['p_id'].disabled = false;
+            creating.children['materials-div'].children['m_id'].disabled = true;
+            break;
+        case 'insert material':
+            document.getElementById('persons-div').style.display = 'none';
+            document.getElementById('materials-div').style.display = 'block';
+            document.getElementById('persons-div').children['p_id'].disabled = true;
+            document.getElementById('materials-div').children['m_id'].disabled = false;
+            break;
+        case 'insert persons & materials':
+            document.getElementById('persons-div').style.display = 'block';
+            document.getElementById('materials-div').style.display = 'block';
+            document.getElementById('persons-div').children['p_id'].disabled = false;
+            document.getElementById('materials-div').children['m_id'].disabled = false;
+            break;
+        default:
+            document.getElementById('persons-div').style.display = 'none';
+            document.getElementById('materials-div').style.display = 'none';
+            document.getElementById('persons-div').children['p_id'].disabled = true;
+            document.getElementById('materials-div').children['m_id'].disabled = true;
+       }
+    });
+    
+    updateSelection.addEventListener('change', function() {
+    	switch (this.options[this.selectedIndex].text) {
+        case 'update logistics':
+        	document.getElementById('logistics-update-div').style.display = 'block';
+            document.getElementById('driver-update-div').style.display = 'none';
+            document.getElementById('persons-update-div').style.display = 'none';
+            document.getElementById('materials-update-div').style.display = 'none';
+            
+            document.getElementById('logistics-update-div').children['l_id'].disabled = false;
+            document.getElementById('driver-update-div').children['d_id'].disabled = true;
+            document.getElementById('persons-update-div').children['p_id'].disabled = true;
+            document.getElementById('materials-update-div').children['m_id'].disabled = true;
+            
+            document.getElementById('update-btn').style.display = 'block';
+        	break;
+            
+        case 'update driver':
+        	document.getElementById('logistics-update-div').style.display = 'none';
+            document.getElementById('driver-update-div').style.display = 'block';
+            document.getElementById('persons-update-div').style.display = 'none';
+            document.getElementById('materials-update-div').style.display = 'none';
+            
+            document.getElementById('logistics-update-div').children['l_id'].disabled = true;
+            document.getElementById('driver-update-div').children['d_id'].disabled = false;
+            document.getElementById('persons-update-div').children['p_id'].disabled = true;
+            document.getElementById('materials-update-div').children['m_id'].disabled = true;
+            
+            document.getElementById('update-btn').style.display = 'block';
+            break;
+            
+        case 'update persons':
+        	document.getElementById('logistics-update-div').style.display = 'none';
+            document.getElementById('driver-update-div').style.display = 'none';
+            document.getElementById('persons-update-div').style.display = 'block';
+            document.getElementById('materials-update-div').style.display = 'none';
+            
+            document.getElementById('logistics-update-div').children['l_id'].disabled = true;
+            document.getElementById('driver-update-div').children['d_id'].disabled = true;
+            document.getElementById('persons-update-div').children['p_id'].disabled = false;
+            document.getElementById('materials-update-div').children['m_id'].disabled = true;
+            
+            document.getElementById('update-btn').style.display = 'block';
+        	break;
+            
+        case 'update materials':
+        	document.getElementById('logistics-update-div').style.display = 'none';
+            document.getElementById('driver-update-div').style.display = 'none';
+            document.getElementById('persons-update-div').style.display = 'none';
+            document.getElementById('materials-update-div').style.display = 'block';
+            
+            document.getElementById('logistics-update-div').children['l_id'].disabled = true;
+            document.getElementById('driver-update-div').children['d_id'].disabled = true;
+            document.getElementById('persons-update-div').children['p_id'].disabled = true;
+            document.getElementById('materials-update-div').children['m_id'].disabled = false;
+            
+            document.getElementById('update-btn').style.display = 'block';
+        	break;
+            
+        default:
+        	document.getElementById('logistics-update-div').style.display = 'none';
+            document.getElementById('driver-update-div').style.display = 'none';
+            document.getElementById('persons-update-div').style.display = 'none';
+            document.getElementById('materials-update-div').style.display = 'none';
+            
+            document.getElementById('logistics-update-div').children['l_id'].disabled = true;
+            document.getElementById('driver-update-div').children['d_id'].disabled = true;
+            document.getElementById('persons-update-div').children['p_id'].disabled = true;
+            document.getElementById('materials-update-div').children['m_id'].disabled = true;
+            ture
+            document.getElementById('update-btn').style.display = 'none';
+        }
+    });
+
+    deleteSelection.addEventListener('change', function() {
+    	switch (this.options[this.selectedIndex].text) {
+        case 'delete logistics':
+        	document.getElementById('logistics-delete-div').style.display = 'block';
+            document.getElementById('driver-delete-div').style.display = 'none';
+            document.getElementById('persons-delete-div').style.display = 'none';
+            document.getElementById('materials-delete-div').style.display = 'none';
+            
+            document.getElementById('logistics-delete-div').children['l_id'].disabled = false;
+            document.getElementById('driver-delete-div').children['d_id'].disabled = true;
+            document.getElementById('persons-delete-div').children['p_id'].disabled = true;
+            document.getElementById('materials-delete-div').children['m_id'].disabled = true;
+            
+            document.getElementById('delete-btn').style.display = 'block';
+        	break;
+            
+        case 'delete driver':
+        	document.getElementById('logistics-delete-div').style.display = 'none';
+            document.getElementById('driver-delete-div').style.display = 'block';
+            document.getElementById('persons-delete-div').style.display = 'none';
+            document.getElementById('materials-delete-div').style.display = 'none';
+            
+            document.getElementById('logistics-delete-div').children['l_id'].disabled = true;
+            document.getElementById('driver-delete-div').children['d_id'].disabled = false;
+            document.getElementById('persons-delete-div').children['p_id'].disabled = true;
+            document.getElementById('materials-delete-div').children['m_id'].disabled = true;
+            
+            document.getElementById('delete-btn').style.display = 'block';
+            break;
+            
+        case 'delete persons':
+        	document.getElementById('logistics-delete-div').style.display = 'none';
+            document.getElementById('driver-delete-div').style.display = 'none';
+            document.getElementById('persons-delete-div').style.display = 'block';
+            document.getElementById('materials-delete-div').style.display = 'none';
+            
+            document.getElementById('logistics-delete-div').children['l_id'].disabled = true;
+            document.getElementById('driver-delete-div').children['d_id'].disabled = true;
+            document.getElementById('persons-delete-div').children['p_id'].disabled = false;
+            document.getElementById('materials-delete-div').children['m_id'].disabled = true;
+            
+            document.getElementById('delete-btn').style.display = 'block';
+        	break;
+            
+        case 'delete materials':
+        	document.getElementById('logistics-delete-div').style.display = 'none';
+            document.getElementById('driver-delete-div').style.display = 'none';
+            document.getElementById('persons-delete-div').style.display = 'none';
+            document.getElementById('materials-delete-div').style.display = 'block';
+            
+            document.getElementById('logistics-delete-div').children['l_id'].disabled = true;
+            document.getElementById('driver-delete-div').children['d_id'].disabled = true;
+            document.getElementById('persons-delete-div').children['p_id'].disabled = true;
+            document.getElementById('materials-delete-div').children['m_id'].disabled = false;
+            
+            document.getElementById('delete-btn').style.display = 'block';
+        	break;
+            
+        default:
+        	document.getElementById('logistics-delete-div').style.display = 'none';
+            document.getElementById('driver-delete-div').style.display = 'none';
+            document.getElementById('persons-delete-div').style.display = 'none';
+            document.getElementById('materials-delete-div').style.display = 'none';
+            
+            document.getElementById('logistics-delete-div').children['l_id'].disabled = true;
+            document.getElementById('driver-delete-div').children['d_id'].disabled = true;
+            document.getElementById('persons-delete-div').children['p_id'].disabled = true;
+            document.getElementById('materials-delete-div').children['m_id'].disabled = true;
+            
+            document.getElementById('delete-btn').style.display = 'none';
+        }
+    });
+</script>
+</body>
+</html>
